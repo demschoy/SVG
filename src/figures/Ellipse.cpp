@@ -54,7 +54,6 @@ Figure * Ellipse::read(std::string fileName)
 	readParameter(file, skippedBytes, readCenter.x);
 
 	skippedBytes = 5;
-	double readYcoord;
 	readParameter(file, skippedBytes, readCenter.y);
 
 	readSkippedBytes(file, skippedBytes);
