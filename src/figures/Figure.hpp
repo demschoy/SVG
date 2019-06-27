@@ -1,7 +1,8 @@
 #pragma once
 
 #include <string>
-#include "./src/figures/Point.hpp"
+
+#include "Point.hpp"
 
 class Figure 
 {

@@ -1,4 +1,4 @@
-#include "./src/figures/Circle.hpp"
+#include "Circle.hpp"
 
 #include <iostream>
 #include <cmath>
@@ -8,9 +8,10 @@ Circle::Circle(Point center, double radius, std::string color)
 {
 	//TODO check for negative radius!
 
-	this->center = center;
+	this->center = Point(center.x, center.y);
 	this->radius = radius;
 	this->color = color;
+	this->type = circle;
 }
 
 Circle::Circle(double radius, std::string color) : Circle(Point(0, 0), radius, color) {	}

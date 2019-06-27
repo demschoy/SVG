@@ -1,4 +1,4 @@
-#include "./src/figures/Ellipse.hpp"
+#include "Ellipse.hpp"
 
 #include <iostream>
 #include <cmath>
@@ -12,6 +12,7 @@ Ellipse::Ellipse(Point center, double radiusX, double radiusY, std::string color
 	this->radiusX = radiusX;
 	this->radiusY = radiusY;
 	this->color = color;
+	this->type = ellipse;
 }
 
 Ellipse::Ellipse(double rx, double ry, std::string color) : Ellipse(Point(0, 0), rx, ry, color) {	}

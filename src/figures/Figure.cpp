@@ -1,4 +1,4 @@
-#include "./src/figures/Figure.hpp"
+#include "Figure.hpp"
 
 #include <fstream>
 

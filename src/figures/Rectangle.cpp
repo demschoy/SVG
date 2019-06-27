@@ -1,4 +1,4 @@
-#include "./src/figures/Rectangle.hpp"
+#include "Rectangle.hpp"
 
 #include <iostream>
 #include <fstream>
@@ -12,6 +12,7 @@ Rectangle::Rectangle(Point coordinates, double width, double height, std::string
 	this->height = height;
 	this->color = color;
 	this->roundedCoordinates = roundedCoordinates;
+	this->type = rectangle;
 }
 
 Rectangle::Rectangle(double width, double height, std::string color, Point roundedCoordinates) 

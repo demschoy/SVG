@@ -1,6 +1,6 @@
 #pragma once
 
-#include "./src/figures/Figure.hpp"
+#include "Figure.hpp"
 
 class Ellipse : public Figure
 {

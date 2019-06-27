@@ -1,6 +1,6 @@
-#include "./src/figures/Point.hpp"
-
 #include <iostream>
+#include "Point.hpp"
+
 
 Point::Point(double _x, double _y) : x(_x), y(_y) {	}
 
