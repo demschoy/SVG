@@ -44,12 +44,11 @@ Figure* Circle::read(std::string fileName)
 	std::ifstream file(fileName);
 	
 	int skippedBytes = 4;
-	double readXcoord;
-	readParameter(file, skippedBytes, readXcoord);
+	Point readCenter(0, 0);
+	readParameter(file, skippedBytes, readCenter.x);
 
 	skippedBytes = 5;
-	double readYcoord;
-	readParameter(file, skippedBytes, readYcoord);
+	readParameter(file, skippedBytes, readCenter.y);
 
 	skippedBytes = 4;
 	double readRadius;
@@ -61,7 +60,6 @@ Figure* Circle::read(std::string fileName)
 
 	file.close();
 
-	Point center(readXcoord, readYcoord);
 	Figure* circle = new Circle(center, readRadius, readColour);
 	return circle;
 }
