@@ -3,16 +3,17 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include <assert.h>
 
 Ellipse::Ellipse(Point center, double radiusX, double radiusY, std::string color)
 {
-	//TODO check for negative radius!
-
 	this->center = center;
 	this->radiusX = radiusX;
 	this->radiusY = radiusY;
 	this->color = color;
 	this->type = ellipse;
+
+	assert(this->radiusX >= 0 && this->radiusY >= 0);
 }
 
 Ellipse::Ellipse(Point center, Point radius, std::string color) : Ellipse(center, radius.x, radius.y, color) { }

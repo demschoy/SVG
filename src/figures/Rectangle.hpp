@@ -33,4 +33,7 @@ private:
 
 	void copyFrom(const Rectangle &other);
 	void writeToFile(std::string fileName, Figure *figure);
+
+	void errorProperlySpecifiedRounded(Point &rounded);
+	void errorLongerSide(double &roundedSide, double &side);
 };

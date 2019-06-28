@@ -12,7 +12,7 @@ Circle::Circle(Point center, double radius, std::string color)
 	this->color = color;
 	this->type = circle;
 
-	assert(this->radius >= 0);
+	assert(this->radius >= 0 && radius >= 0);
 
 }
 

@@ -2,17 +2,21 @@
 
 #include <iostream>
 #include <fstream>
+#include <assert.h>
 
 Rectangle::Rectangle(Point coordinates, double width, double height, std::string color, Point roundedCoordinates)
 {
-	//TODO check for negatives.
-
 	this->coordinates = coordinates;
 	this->width = width;
 	this->height = height;
 	this->color = color;
 	this->roundedCoordinates = roundedCoordinates;
 	this->type = rectangle;
+
+	assert(width >= 0 && height >= 0);
+	errorLongerSide(this->roundedCoordinates.x, this->width);
+	errorLongerSide(this->roundedCoordinates.y, this->height);
+	errorProperlySpecifiedRounded(this->roundedCoordinates);
 }
 
 Rectangle::Rectangle(double width, double height, std::string color, Point roundedCoordinates) 
@@ -153,4 +157,29 @@ void Rectangle::writeToFile(std::string fileName, Figure *figure)
 
 	std::cout << "Successfully created rectangle.\n";
 	file.close();
+}
+
+void Rectangle::errorProperlySpecifiedRounded(Point &rounded)
+{
+	if (rounded.x == DEFAULT_X && rounded.y == DEFAULT_Y)
+	{
+		rounded.x = 0;
+		rounded.y = 0;
+	}
+	else if (rounded.x > 0 && (rounded.x == DEFAULT_X || rounded.x < 0))
+	{
+		rounded.x = rounded.y;
+	}
+	if (rounded.x > 0 && (rounded.y == DEFAULT_Y || rounded.y < 0))
+	{
+		rounded.y = rounded.x;
+	}
+}
+
+void Rectangle::errorLongerSide(double &roundedSide, double &side)
+{
+	if (roundedSide > side / 2)
+	{
+		roundedSide = side / 2;
+	}
 }
