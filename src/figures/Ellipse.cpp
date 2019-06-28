@@ -53,30 +53,38 @@ double Ellipse::getRadiusY() const
 
 Figure * Ellipse::read(std::string fileName)
 {
-	std::ifstream file(fileName);
+	try
+	{
+		std::ifstream file(fileName);
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	int skippedBytes = 4;
-	Point readCenter(0, 0);
-	readParameter(file, skippedBytes, readCenter.x);
+		int skippedBytes = 4;
+		Point readCenter(0, 0);
+		readParameter(file, skippedBytes, readCenter.x);
 
-	skippedBytes = 5;
-	readParameter(file, skippedBytes, readCenter.y);
+		skippedBytes = 5;
+		readParameter(file, skippedBytes, readCenter.y);
 
-	readSkippedBytes(file, skippedBytes);
-	double readRadiusX;
-	readParameter(file, skippedBytes, readRadiusX);
-	
-	double readRadiusY;
-	readParameter(file, skippedBytes, readRadiusY);
+		readSkippedBytes(file, skippedBytes);
+		double readRadiusX;
+		readParameter(file, skippedBytes, readRadiusX);
 
-	skippedBytes = 7;
-	std::string readColour;
-	readColor(file, skippedBytes, readColour);
+		double readRadiusY;
+		readParameter(file, skippedBytes, readRadiusY);
 
-	file.close();
+		skippedBytes = 7;
+		std::string readColour;
+		readColor(file, skippedBytes, readColour);
 
-	Figure* ellipse = new Ellipse(readCenter, readRadiusX, radiusY, readColour);
-	return ellipse;
+		file.close();
+
+		Figure* ellipse = new Ellipse(readCenter, readRadiusX, radiusY, readColour);
+		return ellipse;
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }
 
 bool Ellipse::withinRectangle(Point rectangle, double width, double height)
@@ -127,8 +135,6 @@ void Ellipse::print()
 
 void Ellipse::copyFrom(const Ellipse &other)
 {
-	//TODO check for negative radius!
-
 	center = other.center;
 	radiusX = other.radiusX;
 	radiusY = other.radiusY;
@@ -137,16 +143,25 @@ void Ellipse::copyFrom(const Ellipse &other)
 
 void Ellipse::writeToFile(std::string fileName, Figure *figure)
 {
-	std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
-	int endingPosition = findFileEndPosition(fileName) - 6;
-	file.seekp(endingPosition);
-	Ellipse* ellipse = (Ellipse*)(figure);
-	file << "  <ellipse cx=\"" << ellipse->getCenterCoordinates().x
-		<< "\" cy=\"" << ellipse->getCenterCoordinates().y
-		<< "\" rx=\"" << ellipse->getRadiusX()
-		<< "\" ry=\"" << ellipse->getRadiusY()
-		<< "\" fill=\"" << ellipse->getColor()
-		<< "\" />\n</svg>";
-	std::cout << "Successfully created ellipse.\n";
-	file.close();
+	try
+	{
+		std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+		int endingPosition = findFileEndPosition(fileName) - 6;
+		file.seekp(endingPosition);
+		Ellipse* ellipse = (Ellipse*)(figure);
+		file << "  <ellipse cx=\"" << ellipse->getCenterCoordinates().x
+			<< "\" cy=\"" << ellipse->getCenterCoordinates().y
+			<< "\" rx=\"" << ellipse->getRadiusX()
+			<< "\" ry=\"" << ellipse->getRadiusY()
+			<< "\" fill=\"" << ellipse->getColor()
+			<< "\" />\n</svg>";
+		std::cout << "Successfully created ellipse.\n";
+		file.close();
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }

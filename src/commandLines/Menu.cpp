@@ -39,11 +39,18 @@ void Menu::operationOpen()
 	
 	std::cout << enterFileName;
 	std::cin >> fileName;
-	command.openFile(fileName, file);
-	isOpened = true;
-	std::cout << successfullyOpened << fileName << std::endl;
-	
-	std::cout << suggestedLoading;
+	try
+	{
+		command.openFile(fileName, file);
+		isOpened = true;
+		std::cout << successfullyOpened << fileName << std::endl;
+
+		std::cout << suggestedLoading;
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }
 
 void Menu::operationLoad()
@@ -161,10 +168,18 @@ void Menu::operationPrint()
 
 void Menu::operationClose()
 {
-	command.closeFile(file);
-	command.deleteFigures();
-	isOpened = false;
-	std::cout << successfullyClosed << fileName << std::endl;
+	try
+	{
+		command.closeFile(file);
+		command.deleteFigures();
+		isOpened = false;
+		isLoaded = false;
+		std::cout << successfullyClosed << fileName << std::endl;
+	}
+	catch(std::fstream::failure e)
+	{
+		std::cerr << "Error closed the file " << fileName << std::endl;
+	}
 }
 
 void Menu::invalidOperation()
@@ -203,5 +218,3 @@ void Menu::enterEllipse(Point &centerCoordinates, Point &radius)
 	std::cin >> radius.x >> radius.y;
 
 }
-
-

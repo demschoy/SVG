@@ -44,27 +44,35 @@ double Circle::getRadius() const
 
 Figure* Circle::read(std::string fileName)
 {
-	std::ifstream file(fileName);
-	
-	int skippedBytes = 4;
-	Point readCenter(0, 0);
-	readParameter(file, skippedBytes, readCenter.x);
+	try
+	{
+		std::ifstream file(fileName);
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	skippedBytes = 5;
-	readParameter(file, skippedBytes, readCenter.y);
+		int skippedBytes = 4;
+		Point readCenter(0, 0);
+		readParameter(file, skippedBytes, readCenter.x);
 
-	skippedBytes = 4;
-	double readRadius;
-	readParameter(file, skippedBytes, readRadius);
+		skippedBytes = 5;
+		readParameter(file, skippedBytes, readCenter.y);
 
-	skippedBytes = 7;
-	std::string readColour;
-	readColor(file, skippedBytes, readColour);
+		skippedBytes = 4;
+		double readRadius;
+		readParameter(file, skippedBytes, readRadius);
 
-	file.close();
+		skippedBytes = 7;
+		std::string readColour;
+		readColor(file, skippedBytes, readColour);
 
-	Figure* circle = new Circle(center, readRadius, readColour);
-	return circle;
+		file.close();
+
+		Figure* circle = new Circle(center, readRadius, readColour);
+		return circle;
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }
 
 bool Circle::withinRectangle(Point rectangle, double width, double height)
@@ -123,15 +131,24 @@ void Circle::copyFrom(const Circle &other)
 
 void Circle::writeToFile(std::string fileName, Figure *figure)
 {
-	std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
-	int endingPosition = findFileEndPosition(fileName) - 6;
-	file.seekp(endingPosition);
-	Circle* circle = (Circle*)(figure);
-	file << "  <circle cx=\"" << circle->getCenterCoordinates().x
-		<< "\" cy=\"" << circle->getCenterCoordinates().y
-		<< "\" r=\"" << circle->getRadius()
-		<< "\" fill=\"" << circle->getColor()
-		<< "\" />\n</svg>";
-	std::cout << "Successfully created circle.\n";
-	file.close();
+	try
+	{
+		std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+
+		int endingPosition = findFileEndPosition(fileName) - 6;
+		file.seekp(endingPosition);
+		Circle* circle = (Circle*)(figure);
+		file << "  <circle cx=\"" << circle->getCenterCoordinates().x
+			<< "\" cy=\"" << circle->getCenterCoordinates().y
+			<< "\" r=\"" << circle->getRadius()
+			<< "\" fill=\"" << circle->getColor()
+			<< "\" />\n</svg>";
+		std::cout << "Successfully created circle.\n";
+		file.close();
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }

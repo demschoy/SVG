@@ -33,7 +33,14 @@ void Command::closeFile(std::fstream& file)
 {
 	if (file.eof())
 	{
-		file.close();
+		try
+		{
+			file.close();
+		}
+		catch (std::fstream::failure e)
+		{
+			std::cerr << "Error closing the file " << fileName << std::endl;
+		}
 	}
 }
 
@@ -163,5 +170,13 @@ void Command::readShapes()
 
 void Command::openFile(std::string fileName, std::fstream &openedFile)
 {
-	openedFile.open(fileName);
+	try
+	{
+		openedFile.open(fileName);
+		openedFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }

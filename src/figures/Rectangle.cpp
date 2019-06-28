@@ -58,29 +58,37 @@ double Rectangle::getHeight() const
 
 Figure * Rectangle::read(std::string fileName)
 {
-	std::ifstream file(fileName);
-	
-	int skippedBytes = 3;
-	Point readCoordinates;
-	readParameter(file, skippedBytes, readCoordinates.x);
+	try
+	{
+		std::ifstream file(fileName);
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	skippedBytes = 4;
-	readParameter(file, skippedBytes, readCoordinates.y);
+		int skippedBytes = 3;
+		Point readCoordinates;
+		readParameter(file, skippedBytes, readCoordinates.x);
 
-	skippedBytes = 8;
-	double readWidth;
-	readParameter(file, skippedBytes, readWidth);
-	
-	skippedBytes = 9;
-	double readHeight;
-	readParameter(file, skippedBytes, readHeight);
+		skippedBytes = 4;
+		readParameter(file, skippedBytes, readCoordinates.y);
 
-	skippedBytes = 7;
-	std::string readColour;
-	readColor(file, skippedBytes, readColour);
+		skippedBytes = 8;
+		double readWidth;
+		readParameter(file, skippedBytes, readWidth);
 
-	Figure* rectangle = new Rectangle(readCoordinates, readWidth, readHeight, readColour);
-	return rectangle;
+		skippedBytes = 9;
+		double readHeight;
+		readParameter(file, skippedBytes, readHeight);
+
+		skippedBytes = 7;
+		std::string readColour;
+		readColor(file, skippedBytes, readColour);
+
+		Figure* rectangle = new Rectangle(readCoordinates, readWidth, readHeight, readColour);
+		return rectangle;
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }
 
 bool Rectangle::withinRectangle(Point rectangle, double width, double height)
@@ -144,19 +152,28 @@ void Rectangle::copyFrom(const Rectangle &other)
 
 void Rectangle::writeToFile(std::string fileName, Figure *figure)
 {
-	std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
-	int endingPosition = findFileEndPosition(fileName) - 6;
-	file.seekp(endingPosition);
-	Rectangle* rectangle = (Rectangle*)(figure);
-	file << "  <rect x=\"" << rectangle->getCoordinates().x
-		<< "\" y=\"" << rectangle->getCoordinates().y
-		<< "\" width=\"" << rectangle->getWidth()
-		<< "\" height=\"" << rectangle->getHeight()
-		<< "\" fill=\"" << rectangle->getColor()
-		<< "\" />\n</svg>";
+	try
+	{
+		std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
+		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
-	std::cout << "Successfully created rectangle.\n";
-	file.close();
+		int endingPosition = findFileEndPosition(fileName) - 6;
+		file.seekp(endingPosition);
+		Rectangle* rectangle = (Rectangle*)(figure);
+		file << "  <rect x=\"" << rectangle->getCoordinates().x
+			<< "\" y=\"" << rectangle->getCoordinates().y
+			<< "\" width=\"" << rectangle->getWidth()
+			<< "\" height=\"" << rectangle->getHeight()
+			<< "\" fill=\"" << rectangle->getColor()
+			<< "\" />\n</svg>";
+
+		std::cout << "Successfully created rectangle.\n";
+		file.close();
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << "Error opening the file " << fileName << std::endl;
+	}
 }
 
 void Rectangle::errorProperlySpecifiedRounded(Point &rounded)
