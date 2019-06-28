@@ -104,6 +104,12 @@ void Rectangle::translate(Point translated)
 	coordinates.y += translated.y;
 }
 
+Figure* Rectangle::create(Point coordinate, std::string color, double width, double height)
+{
+	Figure* rectangle = new Rectangle(coordinate, width, height, color);
+	return rectangle;
+}
+
 void Rectangle::print()
 {
 	if (width == 0 || height == 0)

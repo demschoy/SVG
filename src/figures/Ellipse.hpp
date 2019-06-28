@@ -6,7 +6,9 @@ class Ellipse : public Figure
 {
 public:
 	Ellipse(Point center, double radiusX, double radiusY, std::string color);
+	Ellipse(Point center, Point radius, std::string color);
 	Ellipse(double radiusX, double radiusY, std::string color);
+	Ellipse(Point radius, std::string color);
 	Ellipse(const Ellipse &other);
 	Ellipse& operator=(const Ellipse &other);
 
@@ -15,9 +17,13 @@ public:
 	double getRadiusY() const;
 
 	Figure* read(std::string fileName);
+
 	bool withinRectangle(Point rectangle, double width, double height);
 	bool withinCircle(Point upperCircleCenter, double upperCircleRadius);
+	
 	void translate(Point translated);
+
+	Figure* create(Point coordinate, std::string color, double radiusX, double radiusY);
 
 	void print();
 private:

@@ -91,6 +91,12 @@ void Circle::translate(Point translated)
 	center.y += translated.y;
 }
 
+Figure* Circle::create(Point coordinate, std::string color, double radius, double parameter2)
+{
+	Figure* circle = new Circle(coordinate, radius, color);
+	return circle;
+}
+
 void Circle::print()
 {
 	if (radius == 0)

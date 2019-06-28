@@ -9,7 +9,7 @@ class Figure
 public:
 	enum FigureTypes
 	{
-		eclipse,
+		ellipse,
 		rectangle,
 		circle
 	};
@@ -20,7 +20,7 @@ public:
 	virtual std::string getColor() const;
 
 	void setType(FigureTypes type);
-	void setColor(std::string color) ;
+	void setColor(std::string color);
 
 	virtual Figure* read(std::string fileName) = 0;
 
@@ -28,7 +28,11 @@ public:
 	virtual bool withinCircle(Point upperCircleCenter, double upperCircleRadius) = 0;
 	virtual void translate(Point translated) = 0;
 
-	virtual void print() = 0;	
+	virtual Figure* create(Point coordinate, std::string color, double parameter1, double parameter2 = 0) = 0;
+
+	virtual void print() = 0;
+
+	virtual void writeToFile(std::string fileName, Figure *figure) = 0;
 protected:
 	std::string color;
 	FigureTypes type;
@@ -36,5 +40,4 @@ protected:
 	void readSkippedBytes(std::ifstream &file, int skippedBytes);
 	void readParameter(std::ifstream &file, int skippedBytes, double& parameter);
 	void readColor(std::ifstream &file, int skippedBytes, std::string& color);
-	virtual void writeToFile(std::string fileName, Figure *figure) = 0;
 };

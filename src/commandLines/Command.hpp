@@ -1,24 +1,38 @@
 #pragma once
 
-#include "./src/figures/Figure.hpp"
+#include "Figure.hpp"
 #include <vector>
 
 #define CIRCLE "circle"
-#define RECTANGLE "rect"
+#define RECT "rect"
 #define ELLIPSE "ellipse"
 #define SVG_END "/svg>"
 #define SVG_START_SYMBOL '<'
+#define ALL_FIGURES "all figures"
 
 class Command
 {
 public:
 	Command();
 	
-	std::fstream openFile(std::string fileName);
+	void openFile(std::string fileName, std::fstream &openedFile);
 	void loadFile(std::fstream& file);
 	void closeFile(std::fstream& file);
+	
 	void erase(int position);
-	void create(std::string figureType);
+	
+	void createCircle(Point coordinates, double radius, std::string color);
+	void createEllipse(Point coordinates, Point radius, std::string color);
+	void createRectangle(Point coordinates, double width, double height, std::string color);
+	
+	std::vector<Figure*> withinCircle(Point center, double radius);
+	std::vector<Figure*> withinRectangle(Point coordinates, double width, double height);
+	
+	void translate(Point translated, std::string figureType = ALL_FIGURES);
+	
+	void print();
+
+	void deleteFigures();
 private:
 	std::vector<Figure*> figures;
 	std::string fileName;

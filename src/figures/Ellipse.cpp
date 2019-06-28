@@ -15,7 +15,11 @@ Ellipse::Ellipse(Point center, double radiusX, double radiusY, std::string color
 	this->type = ellipse;
 }
 
+Ellipse::Ellipse(Point center, Point radius, std::string color) : Ellipse(center, radius.x, radius.y, color) { }
+
 Ellipse::Ellipse(double rx, double ry, std::string color) : Ellipse(Point(0, 0), rx, ry, color) {	}
+
+Ellipse::Ellipse(Point radius, std::string color) : Ellipse(radius.x, radius.y, color) { }
 
 Ellipse::Ellipse(const Ellipse &other)
 {
@@ -99,6 +103,12 @@ void Ellipse::translate(Point translated)
 {
 	center.x += translated.x;
 	center.y += translated.y;
+}
+
+Figure* Ellipse::create(Point coordinate, std::string color, double radiusX, double radiusY)
+{
+	Figure* ellipse = new Ellipse(coordinate, radiusX, radiusY, color);
+	return ellipse;
 }
 
 void Ellipse::print()

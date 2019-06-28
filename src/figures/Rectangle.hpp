@@ -16,9 +16,13 @@ public:
 	double getHeight() const;
 
 	Figure* read(std::string fileName);
+
 	bool withinRectangle(Point rectangle, double width, double height);
 	bool withinCircle(Point upperCircleCenter, double upperCircleRadius);
+
 	void translate(Point translated);
+
+	Figure* create(Point coordinate, std::string color, double width, double height);
 
 	void print(); 
 private:

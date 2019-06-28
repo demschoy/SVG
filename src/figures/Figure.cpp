@@ -16,9 +16,9 @@ std::string Figure::getType() const
 {
 	switch (type)
 	{
-	case eclipse: return "eclipse"; break;
+	case ellipse: return "ellipse"; break;
 	case rectangle: return "rectangle"; break;
-	case circle: return "eclipse"; break;
+	case circle: return "circle"; break;
 	}
 }
 
