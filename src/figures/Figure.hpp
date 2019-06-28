@@ -28,7 +28,7 @@ public:
 	virtual bool withinCircle(Point upperCircleCenter, double upperCircleRadius) = 0;
 	virtual void translate(Point translated) = 0;
 
-	virtual Figure* create(Point coordinate, std::string color, double parameter1, double parameter2 = 0) = 0;
+	virtual Figure* create(Point coordinate, std::string color, double firstParameter1, double secondParameter = 0) = 0;
 
 	virtual void print() = 0;
 

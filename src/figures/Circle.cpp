@@ -3,15 +3,17 @@
 #include <iostream>
 #include <cmath>
 #include <fstream>
+#include <assert.h>
 
 Circle::Circle(Point center, double radius, std::string color)
 {
-	//TODO check for negative radius!
-
 	this->center = Point(center.x, center.y);
 	this->radius = radius;
 	this->color = color;
 	this->type = circle;
+
+	assert(this->radius >= 0);
+
 }
 
 Circle::Circle(double radius, std::string color) : Circle(Point(0, 0), radius, color) {	}
@@ -91,7 +93,7 @@ void Circle::translate(Point translated)
 	center.y += translated.y;
 }
 
-Figure* Circle::create(Point coordinate, std::string color, double radius, double parameter2)
+Figure* Circle::create(Point coordinate, std::string color, double radius, double secondParameter)
 {
 	Figure* circle = new Circle(coordinate, radius, color);
 	return circle;
