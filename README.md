@@ -4,6 +4,7 @@ This C++ project represents an application that works with Scalable Vector Graph
 - circle
 - rectangle
 - ellipse
+
 The application supports the following operations:
 - open file
 - load from file
