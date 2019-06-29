@@ -55,8 +55,8 @@ void Command::erase(int position)
 		return;
 	}
 
-	std::cout << successfullyErasedMessage << figures[position - 1]->getType() << positionMessage << position << std::endl;
-	figures.erase(figures.begin() + position - 1);
+	std::cout << successfullyErasedMessage << figures[position + 1]->getType() << positionMessage << position << std::endl;
+	figures.erase(figures.begin() + position + 1);
 }
 
 std::vector<Figure*> Command::getFigures() const
