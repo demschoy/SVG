@@ -16,9 +16,9 @@ std::string Figure::getType() const
 {
 	switch (type)
 	{
-	case ellipse: return "ellipse"; break;
-	case rectangle: return "rectangle"; break;
-	case circle: return "circle"; break;
+	case ellipse: return ELLIPSE; break;
+	case rectangle: return RECTANGLE; break;
+	case circle: return CIRCLE; break;
 	}
 }
 
@@ -58,4 +58,3 @@ void Figure::readColor(std::ifstream &file, int skippedBytes, std::string &color
 	file >> color;
 	color.pop_back();
 }
-

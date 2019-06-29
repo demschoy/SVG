@@ -15,7 +15,7 @@ public:
 	double getWidth() const;
 	double getHeight() const;
 
-	Figure* read(std::string fileName);
+	Figure* read(std::string fileName, int position);
 
 	bool withinRectangle(Point rectangle, double width, double height);
 	bool withinCircle(Point upperCircleCenter, double upperCircleRadius);

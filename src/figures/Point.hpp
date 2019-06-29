@@ -1,7 +1,6 @@
 #pragma once
 
-#define DEFAULT_X 0.0
-#define DEFAULT_Y 0.0
+#include "Messages.hpp"
 
 struct Point
 {

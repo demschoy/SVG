@@ -3,18 +3,13 @@
 #include "Figure.hpp"
 #include <vector>
 
-#define CIRCLE "circle"
-#define RECT "rect"
-#define ELLIPSE "ellipse"
-#define SVG_END "/svg>"
-#define SVG_START_SYMBOL '<'
-#define ALL_FIGURES "all figures"
-
 class Command
 {
 public:
-	Command();
+	Command(std::string fileName = "figures.svg");
 	
+	void setFileName(std::string fileName);
+
 	void openFile(std::string fileName, std::fstream &openedFile);
 	void loadFile(std::fstream& file);
 	void closeFile(std::fstream& file);
@@ -38,6 +33,7 @@ private:
 	std::string fileName;
 
 	void readUntilStartSymbol(std::fstream &file);
+	void readUntilSVGStart(std::fstream &file);
 	std::string readUntilShapeFounded(std::fstream &file);
-	void readShapes();
+	void readShapes(std::string figureType, int position);
 };

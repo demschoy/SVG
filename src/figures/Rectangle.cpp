@@ -56,13 +56,14 @@ double Rectangle::getHeight() const
 	return height;
 }
 
-Figure * Rectangle::read(std::string fileName)
+Figure* Rectangle::read(std::string fileName, int position)
 {
 	try
 	{
 		std::ifstream file(fileName);
 		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
+		
+		file.seekg(position);
 		int skippedBytes = 3;
 		Point readCoordinates;
 		readParameter(file, skippedBytes, readCoordinates.x);
@@ -87,7 +88,7 @@ Figure * Rectangle::read(std::string fileName)
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorReadingFileMessage << fileName << std::endl;
 	}
 }
 
@@ -126,15 +127,16 @@ void Rectangle::print()
 {
 	if (width == 0 || height == 0)
 	{
-		std::cout << "The rectangle cannot be displayed.\n";
+		std::cout << errorPrintingFigure;
 		return;
 	}
-	std::cout << "Rectangle: center ";
+	std::cout << printRectangleCoordinates;
 	coordinates.print();
-	std::cout << ", width " << width << ", height " << height << ", color " << color;
+	std::cout << printWidth << width << printHeight << height << printColor << color;
+
 	if (roundedCoordinates.x != DEFAULT_X && roundedCoordinates.y != DEFAULT_Y)
 	{
-		std::cout << ", rounded coordinates ";
+		std::cout << printRoundedCoordinates;
 		roundedCoordinates.print();
 	}
 	std::cout << std::endl;
@@ -167,12 +169,12 @@ void Rectangle::writeToFile(std::string fileName, Figure *figure)
 			<< "\" fill=\"" << rectangle->getColor()
 			<< "\" />\n</svg>";
 
-		std::cout << "Successfully created rectangle.\n";
+		std::cout << successfullyCreatedMessage << getType() << std::endl;
 		file.close();
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorWritingToFileMessage << fileName << std::endl;
 	}
 }
 

@@ -26,7 +26,8 @@ void Menu::program()
 		}
 		std::cin >> commandCode;
 	}
-
+	
+	operationExit();
 }
 
 void Menu::operationOpen()
@@ -42,14 +43,18 @@ void Menu::operationOpen()
 	try
 	{
 		command.openFile(fileName, file);
-		isOpened = true;
-		std::cout << successfullyOpened << fileName << std::endl;
+		if (!file.fail())
+		{
+			command.setFileName(fileName);
+			isOpened = true;
+			std::cout << successfullyOpened << fileName << std::endl;
 
-		std::cout << suggestedLoading;
+			std::cout << suggestedLoading;
+		}
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorOpeningFileMessage << fileName << std::endl;
 	}
 }
 
@@ -96,6 +101,7 @@ void Menu::operationCreate()
 		enterEllipse(coordinatesCenter, radius);
 		command.createEllipse(coordinatesCenter, radius, color);
 	}
+	std::cout << continueMessage;
 }
 
 void Menu::operationErase()
@@ -131,6 +137,7 @@ void Menu::operationWithin()
 		std::vector<Figure*> withinFigures = command.withinCircle(coordinates, radius);
 		printWithinFigures(withinFigures);
 	}
+	std::cout << continueMessage;
 }
 
 void Menu::printWithinFigures(std::vector<Figure*> withinFigures)
@@ -159,11 +166,13 @@ void Menu::operationTranslate()
 	std::cin >> translated.x >> translated.y;
 	
 	command.translate(translated, type);
+	std::cout << continueMessage;
 }
 
 void Menu::operationPrint()
 {
 	command.print();
+	std::cout << continueMessage;
 }
 
 void Menu::operationClose()
@@ -172,14 +181,24 @@ void Menu::operationClose()
 	{
 		command.closeFile(file);
 		command.deleteFigures();
-		isOpened = false;
-		isLoaded = false;
-		std::cout << successfullyClosed << fileName << std::endl;
+		if (!file.badbit && !file.failbit)
+		{
+			isOpened = false;
+			isLoaded = false;
+			std::cout << successfullyClosed << fileName << std::endl;
+			std::cout << continueMessage;
+		}
 	}
 	catch(std::fstream::failure e)
 	{
-		std::cerr << "Error closed the file " << fileName << std::endl;
+		std::cerr << errorClosingFileMessage << fileName << std::endl;
 	}
+}
+
+void Menu::operationExit()
+{
+	std::cout << endingMessage;
+	std::cout << std::endl << std::endl << std::endl;
 }
 
 void Menu::invalidOperation()
@@ -216,5 +235,4 @@ void Menu::enterEllipse(Point &centerCoordinates, Point &radius)
 
 	std::cout << std::endl << enterEllipseRadius;
 	std::cin >> radius.x >> radius.y;
-
 }

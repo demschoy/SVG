@@ -42,13 +42,14 @@ double Circle::getRadius() const
 	return radius;
 }
 
-Figure* Circle::read(std::string fileName)
+Figure* Circle::read(std::string fileName, int position)
 {
 	try
 	{
 		std::ifstream file(fileName);
 		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-
+		
+		file.seekg(position);
 		int skippedBytes = 4;
 		Point readCenter(0, 0);
 		readParameter(file, skippedBytes, readCenter.x);
@@ -71,7 +72,7 @@ Figure* Circle::read(std::string fileName)
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorReadingFileMessage << fileName << std::endl;
 	}
 }
 
@@ -111,13 +112,13 @@ void Circle::print()
 {
 	if (radius == 0)
 	{
-		std::cout << "The circle cannot be displayed.\n";
+		std::cout << errorPrintingFigure;
 		return;
 	}
 
-	std::cout << "Circle: center ";
+	std::cout << printCircleCenter;
 	center.print();
-	std::cout<< ", radius " << radius << ", color " << color << std::endl;
+	std::cout<< printRadius << radius << printColor << color << std::endl;
 }
 
 void Circle::copyFrom(const Circle &other)
@@ -125,8 +126,6 @@ void Circle::copyFrom(const Circle &other)
 	center = other.center;
 	radius = other.radius;
 	color = other.color;
-
-	//TODO check for negative radius!
 }
 
 void Circle::writeToFile(std::string fileName, Figure *figure)
@@ -144,11 +143,11 @@ void Circle::writeToFile(std::string fileName, Figure *figure)
 			<< "\" r=\"" << circle->getRadius()
 			<< "\" fill=\"" << circle->getColor()
 			<< "\" />\n</svg>";
-		std::cout << "Successfully created circle.\n";
+		std::cout << successfullyCreatedMessage << getType() << std::endl;
 		file.close();
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorWritingToFileMessage << fileName << std::endl;
 	}
 }

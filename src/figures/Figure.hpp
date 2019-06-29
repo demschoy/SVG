@@ -22,7 +22,7 @@ public:
 	void setType(FigureTypes type);
 	void setColor(std::string color);
 
-	virtual Figure* read(std::string fileName) = 0;
+	virtual Figure* read(std::string fileName, int position) = 0;
 
 	virtual bool withinRectangle(Point rectangle , double width, double height) = 0;
 	virtual bool withinCircle(Point upperCircleCenter, double upperCircleRadius) = 0;

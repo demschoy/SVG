@@ -51,13 +51,14 @@ double Ellipse::getRadiusY() const
 	return radiusY;
 }
 
-Figure * Ellipse::read(std::string fileName)
+Figure * Ellipse::read(std::string fileName, int position)
 {
 	try
 	{
 		std::ifstream file(fileName);
 		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
+		file.seekg(position);
 		int skippedBytes = 4;
 		Point readCenter(0, 0);
 		readParameter(file, skippedBytes, readCenter.x);
@@ -83,7 +84,7 @@ Figure * Ellipse::read(std::string fileName)
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorReadingFileMessage << fileName << std::endl;
 	}
 }
 
@@ -124,13 +125,13 @@ void Ellipse::print()
 {
 	if (radiusX == 0 || radiusY == 0)
 	{
-		std::cout << "The ellipse cannot be displayed.\n";
+		std::cout << errorPrintingFigure;
 		return;
 	}
 
-	std::cout << "Ellipse: center ";
+	std::cout << printEllipseCenter;
 	center.print();
-	std::cout << ", radius x " << radiusX << ", radius y " << radiusY << ", color " << color << std::endl;
+	std::cout << printEllipseRadiusX << radiusX << printEllipseRadiusY << radiusY << printColor << color << std::endl;
 }
 
 void Ellipse::copyFrom(const Ellipse &other)
@@ -157,11 +158,11 @@ void Ellipse::writeToFile(std::string fileName, Figure *figure)
 			<< "\" ry=\"" << ellipse->getRadiusY()
 			<< "\" fill=\"" << ellipse->getColor()
 			<< "\" />\n</svg>";
-		std::cout << "Successfully created ellipse.\n";
+		std::cout << successfullyCreatedMessage << getType() << std::endl;
 		file.close();
 	}
 	catch (std::fstream::failure e)
 	{
-		std::cerr << "Error opening the file " << fileName << std::endl;
+		std::cerr << errorWritingToFileMessage << fileName << std::endl;
 	}
 }
