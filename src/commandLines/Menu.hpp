@@ -9,6 +9,7 @@
 
 class Menu
 {
+public:
 	void program();
 
 private:
