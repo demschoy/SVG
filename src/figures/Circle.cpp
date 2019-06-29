@@ -67,7 +67,7 @@ Figure* Circle::read(std::string fileName, int position)
 
 		file.close();
 
-		Figure* circle = new Circle(center, readRadius, readColour);
+		Figure* circle = new Circle(readCenter, readRadius, readColour);
 		return circle;
 	}
 	catch (std::fstream::failure e)
@@ -133,7 +133,7 @@ void Circle::writeToFile(std::string fileName, Figure *figure)
 	try
 	{
 		std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
-		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
 
 		int endingPosition = findFileEndPosition(fileName) - 6;
 		file.seekp(endingPosition);

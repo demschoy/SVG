@@ -157,7 +157,7 @@ void Rectangle::writeToFile(std::string fileName, Figure *figure)
 	try
 	{
 		std::ofstream file(fileName, std::ios_base::app || std::ios_base::ate);
-		file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
 
 		int endingPosition = findFileEndPosition(fileName) - 6;
 		file.seekp(endingPosition);

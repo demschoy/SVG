@@ -34,16 +34,13 @@ void Command::loadFile(std::fstream& file)
 
 void Command::closeFile(std::fstream& file)
 {
-	if (file.eof())
+	try
 	{
-		try
-		{
-			file.close();
-		}
-		catch (std::fstream::failure e)
-		{
-			std::cerr << errorClosingFileMessage << fileName << std::endl;
-		}
+		file.close();
+	}
+	catch (std::fstream::failure e)
+	{
+		std::cerr << errorClosingFileMessage << fileName << std::endl;
 	}
 }
 
@@ -55,8 +52,8 @@ void Command::erase(int position)
 		return;
 	}
 
-	std::cout << successfullyErasedMessage << figures[position + 1]->getType() << positionMessage << position << std::endl;
-	figures.erase(figures.begin() + position + 1);
+	std::cout << successfullyErasedMessage << figures[position - 1]->getType() << positionMessage << position << std::endl;
+	figures.erase(figures.begin() + position - 1);
 }
 
 std::vector<Figure*> Command::getFigures() const
@@ -66,23 +63,23 @@ std::vector<Figure*> Command::getFigures() const
 
 void Command::createCircle(Point coordinates, double radius, std::string color)
 {
-	Figure* circle = figures[0]->create(coordinates, color, radius);
+	Figure* circle = getDefaultFigure(CIRCLE)->create(coordinates, color, radius);
 	figures.push_back(circle);
-	figures[0]->writeToFile(fileName, circle);
+	getDefaultFigure(CIRCLE)->writeToFile(fileName, circle);
 }
 
 void Command::createEllipse(Point coordinates, Point radius, std::string color)
 {
-	Figure* ellipse = figures[0]->create(coordinates, color, radius.x, radius.y);
+	Figure* ellipse = getDefaultFigure(ELLIPSE)->create(coordinates, color, radius.x, radius.y);
 	figures.push_back(ellipse);
-	figures[0]->writeToFile(fileName, ellipse);
+	getDefaultFigure(ELLIPSE)->writeToFile(fileName, ellipse);
 }
 
 void Command::createRectangle(Point coordinates, double width, double height, std::string color)
 {
-	Figure* rectangle = figures[0]->create(coordinates, color, width, height);
+	Figure* rectangle = getDefaultFigure(RECT)->create(coordinates, color, width, height);
 	figures.push_back(rectangle);
-	figures[0]->writeToFile(fileName, rectangle);
+	getDefaultFigure(RECT)->writeToFile(fileName, rectangle);
 }
 
 std::vector<Figure*> Command::withinCircle(Point center, double radius)
