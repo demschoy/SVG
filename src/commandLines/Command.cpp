@@ -59,6 +59,11 @@ void Command::erase(int position)
 	figures.erase(figures.begin() + position - 1);
 }
 
+std::vector<Figure*> Command::getFigures() const
+{
+	return figures;
+}
+
 void Command::createCircle(Point coordinates, double radius, std::string color)
 {
 	Figure* circle = figures[0]->create(coordinates, color, radius);

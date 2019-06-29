@@ -15,6 +15,8 @@ public:
 	void closeFile(std::fstream& file);
 	
 	void erase(int position);
+
+	std::vector<Figure*> getFigures() const;
 	
 	void createCircle(Point coordinates, double radius, std::string color);
 	void createEllipse(Point coordinates, Point radius, std::string color);
