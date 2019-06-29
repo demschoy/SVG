@@ -33,4 +33,9 @@ private:
 
 	void copyFrom(const Ellipse &other); 
 	void writeToFile(std::string fileName, Figure *figure);
+
+	std::string printEllipseCenter = "Ellipse, center ";
+	std::string printEllipseRadiusX = ", radius x ";
+	std::string printEllipseRadiusY = ", radius y ";
+
 };

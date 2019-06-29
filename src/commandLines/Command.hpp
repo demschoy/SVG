@@ -36,4 +36,21 @@ private:
 	void readUntilSVGStart(std::fstream &file);
 	std::string readUntilShapeFounded(std::fstream &file);
 	void readShapes(std::string figureType, int position);
+
+
+	std::string errorClosingFileMessage = "Error closing the file ";
+	std::string errorNoFigureMessage = "There is no figure number ";
+	std::string errorOpeningFileMessage = "Error opening the file ";
+
+	std::string positionMessage = " at position ";
+	std::string emptyPrintMessage = "No figures to be displayed.\n";
+
+	std::string noFiguresWithin = "No figures are located within the figure\n";
+
+	std::string successfullyOpened = "Successfully opened file ";
+	std::string successfullyLoaded = "Successfully loaded file ";
+	std::string successfullyClosed = "Successfully closed file ";
+	std::string successfullyErasedMessage = "Successfully erased ";
+	
+
 };

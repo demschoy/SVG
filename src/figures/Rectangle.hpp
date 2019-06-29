@@ -36,4 +36,10 @@ private:
 
 	void errorProperlySpecifiedRounded(Point &rounded);
 	void errorLongerSide(double &roundedSide, double &side);
+
+	std::string printWidth = ", width ";
+	std::string printHeight = ", height ";
+	std::string printRoundedCoordinates = ", rounded coordinates ";
+	std::string printRectangleCoordinates = "Rectangle, coordinates ";
+
 };

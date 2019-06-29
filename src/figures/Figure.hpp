@@ -1,8 +1,19 @@
 #pragma once
 
 #include <string>
-
 #include "Point.hpp"
+
+#define ALL_FIGURES "all figures"
+#define	RECTANGLE "rectangle"
+#define RECT "rect"
+#define CIRCLE "circle"
+#define ELLIPSE "ellipse"
+
+#define DEFAULT_COLOR "no color"
+
+#define SVG_START_SYMBOL '<'
+#define SVG_END "/svg>"
+#define SVG_START_WORD "<svg>"
 
 class Figure 
 {
@@ -40,4 +51,13 @@ protected:
 	void readSkippedBytes(std::ifstream &file, int skippedBytes);
 	void readParameter(std::ifstream &file, int skippedBytes, double& parameter);
 	void readColor(std::ifstream &file, int skippedBytes, std::string& color);
+	
+	std::string printColor = ", color ";
+
+	std::string errorPrintingFigure = "The figure cannot be displayed.\n";
+	std::string errorWritingToFileMessage = "Error writing to the file ";
+	std::string errorReadingFileMessage = "Error reading the file ";
+
+	std::string successfullyCreatedMessage = "Successfully created ";
+
 };

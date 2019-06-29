@@ -29,4 +29,8 @@ private:
 
 	void copyFrom(const Circle &other);
 	void writeToFile(std::string fileName, Figure* figure);
+
+	std::string printCircleCenter = "Circle, center ";
+	std::string printRadius = ", radius ";
+
 };
