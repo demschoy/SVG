@@ -15,7 +15,7 @@ int failedTestsCounter = 0;
 class UnitTests {
 public:
 	template <typename T>
-	static void AssertEq(T expected, T value)
+	static void AssertEqual(T expected, T value)
 	{
 		testsCounter++;
 		if (expected != value) 
@@ -49,7 +49,7 @@ void testOpenFile()
 	command.openFile(fileName, file);
 	bool value = file.is_open();
 	bool expected = true;
-	UnitTests::AssertEq(expected, value);
+	UnitTests::AssertEqual(expected, value);
 	file.close();
 }
 
@@ -67,7 +67,7 @@ void testLoadFile()
 	std::vector<Figure*> figures = command.getFigures();
 	int expected = 3;
 	int value = figures.size();
-	UnitTests::AssertEq(expected, value);
+	UnitTests::AssertEqual(expected, value);
 	file.close();
 }
 
@@ -83,18 +83,18 @@ void testEraseFigure()
 	command.loadFile(file);
 	std::vector<Figure*> figures = command.getFigures();
 
-	UnitTests::AssertEq(3, (int)figures.size());
-	UnitTests::AssertEq((std::string)RECTANGLE, figures[0]->getType());
-	UnitTests::AssertEq((std::string)CIRCLE, figures[1]->getType());
-	UnitTests::AssertEq((std::string)RECTANGLE, figures[2]->getType());
+	UnitTests::AssertEqual(3, (int)figures.size());
+	UnitTests::AssertEqual((std::string)RECTANGLE, figures[0]->getType());
+	UnitTests::AssertEqual((std::string)CIRCLE, figures[1]->getType());
+	UnitTests::AssertEqual((std::string)RECTANGLE, figures[2]->getType());
 
 	command.erase(1);
 	figures = command.getFigures();
-	UnitTests::AssertEq(2, (int)figures.size());
-	UnitTests::AssertEq((std::string)CIRCLE, figures[0]->getType());
+	UnitTests::AssertEqual(2, (int)figures.size());
+	UnitTests::AssertEqual((std::string)CIRCLE, figures[0]->getType());
 
 	command.erase(9);
-	UnitTests::AssertEq(2, (int)figures.size());
+	UnitTests::AssertEqual(2, (int)figures.size());
 	file.close();
 }
 
@@ -106,7 +106,7 @@ void testCreateCircle()
 
 	std::vector<Figure*> figures = command.getFigures();
 
-	UnitTests::AssertEq(0, (int)figures.size());
+	UnitTests::AssertEqual(0, (int)figures.size());
 
 	Point center(0, 0);
 	double radius = 5;
@@ -114,14 +114,14 @@ void testCreateCircle()
 	command.createCircle(center, radius, color);
 	figures = command.getFigures();
 
-	UnitTests::AssertEq(1, (int)figures.size());
-	UnitTests::AssertEq((std::string)CIRCLE, figures[0]->getType());
-	UnitTests::AssertEq((std::string)"red",figures[0]->getColor());
+	UnitTests::AssertEqual(1, (int)figures.size());
+	UnitTests::AssertEqual((std::string)CIRCLE, figures[0]->getType());
+	UnitTests::AssertEqual((std::string)"red",figures[0]->getColor());
 
 	Circle* circle = (Circle*)figures[0];
-	UnitTests::AssertEq(0.0, circle->getCenterCoordinates().x);
-	UnitTests::AssertEq(0.0, circle->getCenterCoordinates().y);
-	UnitTests::AssertEq(5.0, circle->getRadius());
+	UnitTests::AssertEqual(0.0, circle->getCenterCoordinates().x);
+	UnitTests::AssertEqual(0.0, circle->getCenterCoordinates().y);
+	UnitTests::AssertEqual(5.0, circle->getRadius());
 }
 
 void testCreateRectangle()
@@ -132,7 +132,7 @@ void testCreateRectangle()
 
 	std::vector<Figure*> figures = command.getFigures();
 
-	UnitTests::AssertEq(0, (int)figures.size());
+	UnitTests::AssertEqual(0, (int)figures.size());
 
 	Point coordinated(0, 0);
 	double width = 2, height = 3;
@@ -141,9 +141,9 @@ void testCreateRectangle()
 	command.createRectangle(coordinated, width, height, color);
 	figures = command.getFigures();
 
-	UnitTests::AssertEq(1, (int)figures.size());
-	UnitTests::AssertEq((std::string)RECTANGLE, figures[0]->getType());
-	UnitTests::AssertEq((std::string)"blue", figures[0]->getColor());
+	UnitTests::AssertEqual(1, (int)figures.size());
+	UnitTests::AssertEqual((std::string)RECTANGLE, figures[0]->getType());
+	UnitTests::AssertEqual((std::string)"blue", figures[0]->getColor());
 }
 
 void testCreateEllipse()
@@ -154,16 +154,16 @@ void testCreateEllipse()
 
 	std::vector<Figure*> figures = command.getFigures();
 
-	UnitTests::AssertEq(0, (int)figures.size());
+	UnitTests::AssertEqual(0, (int)figures.size());
 	Point ellipseCenter(3, 4);
 	double radiusX = 3, radiusY = 2;
 	std::string color = "green";
 	command.createEllipse(ellipseCenter, Point(radiusX, radiusY), color);
 	figures = command.getFigures();
 
-	UnitTests::AssertEq(1, (int)figures.size());
-	UnitTests::AssertEq((std::string)ELLIPSE, figures[0]->getType());
-	UnitTests::AssertEq((std::string)"green", figures[0]->getColor());
+	UnitTests::AssertEqual(1, (int)figures.size());
+	UnitTests::AssertEqual((std::string)ELLIPSE, figures[0]->getType());
+	UnitTests::AssertEqual((std::string)"green", figures[0]->getColor());
 }
 
 void testTranslate()
@@ -179,23 +179,23 @@ void testTranslate()
 	std::vector<Figure*> figures = command.getFigures();
 	
 	Circle* secondFigure = (Circle*)(figures[1]);
-	UnitTests::AssertEq(5.0, secondFigure->getCenterCoordinates().x);
-	UnitTests::AssertEq(5.0, secondFigure->getCenterCoordinates().y);
-	UnitTests::AssertEq(10.0, secondFigure->getRadius());
-	UnitTests::AssertEq((std::string)"blue", secondFigure->getColor());
+	UnitTests::AssertEqual(5.0, secondFigure->getCenterCoordinates().x);
+	UnitTests::AssertEqual(5.0, secondFigure->getCenterCoordinates().y);
+	UnitTests::AssertEqual(10.0, secondFigure->getRadius());
+	UnitTests::AssertEqual((std::string)"blue", secondFigure->getColor());
 
 	Point translated(1, 2);
 	command.translate(translated);
-	UnitTests::AssertEq(6.0, secondFigure->getCenterCoordinates().x);
-	UnitTests::AssertEq(7.0, secondFigure->getCenterCoordinates().y);
-	UnitTests::AssertEq(10.0, secondFigure->getRadius());
-	UnitTests::AssertEq((std::string)"blue", secondFigure->getColor());
+	UnitTests::AssertEqual(6.0, secondFigure->getCenterCoordinates().x);
+	UnitTests::AssertEqual(7.0, secondFigure->getCenterCoordinates().y);
+	UnitTests::AssertEqual(10.0, secondFigure->getRadius());
+	UnitTests::AssertEqual((std::string)"blue", secondFigure->getColor());
 	
 	command.translate(translated, "ellipse");
-	UnitTests::AssertEq(6.0, secondFigure->getCenterCoordinates().x);
-	UnitTests::AssertEq(7.0, secondFigure->getCenterCoordinates().y);
-	UnitTests::AssertEq(10.0, secondFigure->getRadius());
-	UnitTests::AssertEq((std::string)"blue", secondFigure->getColor());
+	UnitTests::AssertEqual(6.0, secondFigure->getCenterCoordinates().x);
+	UnitTests::AssertEqual(7.0, secondFigure->getCenterCoordinates().y);
+	UnitTests::AssertEqual(10.0, secondFigure->getRadius());
+	UnitTests::AssertEqual((std::string)"blue", secondFigure->getColor());
 	file.close();
 }
 
@@ -211,7 +211,7 @@ void testWithinCircle()
 	std::vector<Figure*> figures = command.getFigures();
 
 	std::vector<Figure*> withinFigures = command.withinCircle(Point(0, 0), 5);
-	UnitTests::AssertEq(0, (int)withinFigures.size());
+	UnitTests::AssertEqual(0, (int)withinFigures.size());
 	file.close();
 }
 
@@ -228,9 +228,9 @@ void testWithinRectangle()
 
 	std::vector<Figure*> withinFigures = command.withinRectangle(Point(0, 0), 30, 30);
 
-	UnitTests::AssertEq(2, (int)withinFigures.size());
-	UnitTests::AssertEq((std::string)RECTANGLE, withinFigures[0]->getType());
-	UnitTests::AssertEq((std::string)"green", withinFigures[0]->getColor());
+	UnitTests::AssertEqual(2, (int)withinFigures.size());
+	UnitTests::AssertEqual((std::string)RECTANGLE, withinFigures[0]->getType());
+	UnitTests::AssertEqual((std::string)"green", withinFigures[0]->getColor());
 	file.close();
 }
 
@@ -245,11 +245,11 @@ void testCloseFile()
 	
 	bool expected = true;
 	bool value = file.is_open();
-	UnitTests::AssertEq(expected, value);
+	UnitTests::AssertEqual(expected, value);
 	
 	command.closeFile(file);
 	expected = false;
 	value = file.is_open();
-	UnitTests::AssertEq(expected, value);
+	UnitTests::AssertEqual(expected, value);
 }
 
